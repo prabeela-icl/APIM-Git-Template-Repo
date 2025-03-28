@@ -1,0 +1,5 @@
+
+<inbound>
+    <base />
+    <log-to-eventhub logger-id="apim-logger">Incoming request received</log-to-eventhub>
+</inbound>
