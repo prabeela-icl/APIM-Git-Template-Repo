@@ -53,19 +53,19 @@ jobs:
       - name: Import Existing Resource
         run: |
           cd environments/${{ env.ENVIRONMENT }}
-          terraform import azurerm_resource_group.rg "/subscriptions/${{ env.SUBSCRIPTION_ID }}/resourceGroups/${{ env.AZURE_RESOURCE_GROUP }} " || echo "Resource already imported"
+          terraform import azurerm_resource_group.rg "/subscriptions/${{ env.SUBSCRIPTION_ID }}/resourceGroups/${{ env.AZURE_RESOURCE_GROUP }} " || echo "Resource already imported" -var="AZURE_RESOURCE_GROUP=${{ env.AZURE_RESOURCE_GROUP }}"
 
 
       - name: Plan Terraform
         run: |
           cd environments/${{ env.ENVIRONMENT }}
-          terraform plan -out=tfplan -var="subscription_id=${{  env.SUBSCRIPTION_ID }}" -var="environment=${{ env.ENVIRONMENT }}"
+          terraform plan -out=tfplan -var="subscription_id=${{  env.SUBSCRIPTION_ID }}" -var="environment=${{ env.ENVIRONMENT }}" -var="AZURE_RESOURCE_GROUP=${{ env.AZURE_RESOURCE_GROUP }}"
           
 
       - name: Apply Terraform (Manual Approval Required)
         run: |
           cd environments/${{ env.ENVIRONMENT }}
-          terraform apply -auto-approve -var="subscription_id=${{  env.SUBSCRIPTION_ID }}" -var="environment=${{ env.ENVIRONMENT }}"
+          terraform apply -auto-approve -var="subscription_id=${{  env.SUBSCRIPTION_ID }}" -var="environment=${{ env.ENVIRONMENT }}" -var="AZURE_RESOURCE_GROUP=${{ env.AZURE_RESOURCE_GROUP }}"
 
       - name: Deploy API to APIM
         run: |
