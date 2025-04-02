@@ -22,7 +22,7 @@ jobs:
       - name: Set Environment Variables
         run: |
           echo "ENVIRONMENT=${{ github.event.inputs.environment || 'dev' }}" >> $GITHUB_ENV
-          echo "SUBSCRIPTION_ID=$(echo '${{ secrets.AZURE_SUBSCRIPTION_ID }}' | jq -r .subscriptionId)" >> $GITHUB_ENV
+          echo "SUBSCRIPTION_ID=$(echo '${{ secrets.AZURE_SUBSCRIPTION_ID }}')" >> $GITHUB_ENV
           echo "Using environment: $ENVIRONMENT"
           echo "Using subscription: $SUBSCRIPTION_ID"
 
