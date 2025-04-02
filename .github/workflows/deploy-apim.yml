@@ -4,6 +4,12 @@ on:
   push:
     branches:
       - main  # Runs when code is pushed to the main branch
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment to deploy (dev/prod)"
+        required: true
+        default: "dev"
 
 jobs:
   deploy-apim:
@@ -12,6 +18,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+      
+      - name: Set Environment Variables
+        run: echo "ENVIRONMENT=${{ github.event.inputs.environment || 'dev' }}" >> $GITHUB_ENV
 
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v2
@@ -27,13 +36,22 @@ jobs:
           az login --service-principal             -u ${{ secrets.AZURE_CLIENT_ID }}             -p ${{ secrets.AZURE_CLIENT_SECRET }}             --tenant ${{ secrets.AZURE_TENANT_ID }}
 
       - name: Initialize Terraform
-        run: terraform init
+        run: |
+          cd environments/$ENVIRONMENT
+          terraform init
 
-      - name: Apply Terraform configuration
-        run: terraform apply -auto-approve
+      - name: Plan Terraform
+        run: |
+          cd environments/$ENVIRONMENT
+          terraform plan -out=tfplan
+
+      - name: Apply Terraform (Manual Approval Required)
+        run: |
+          cd environments/$ENVIRONMENT
+          terraform apply -auto-approve
 
       - name: Deploy API to APIM
         run: |
           az apim api import --resource-group my-rg             --service-name my-apim             --path sample-api             --specification-url $(cat apis/api1/definitions/openapi.yaml)
 
-          
+
