@@ -31,6 +31,8 @@ jobs:
         run: |
           echo "ENVIRONMENT: $ENVIRONMENT"
           echo "SUBSCRIPTION_ID: $SUBSCRIPTION_ID"
+          echo "AZURE_RESOURCE_GROUP: $AZURE_RESOURCE_GROUP"
+
 
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v2
