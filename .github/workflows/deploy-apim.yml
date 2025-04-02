@@ -23,7 +23,7 @@ jobs:
         run: |
           echo "ENVIRONMENT=${{ github.event.inputs.environment || 'dev' }}" >> $GITHUB_ENV
           echo "SUBSCRIPTION_ID=$(echo '${{ secrets.AZURE_SUBSCRIPTION_ID }}')" >> $GITHUB_ENV
-          echo "RESOURCE_GROUP =$(echo '${{ secrets.AZURE_RESOURCE_GROUP }}')" >> $GITHUB_ENV
+          echo "AZURE_RESOURCE_GROUP =$(echo '${{ secrets.AZURE_RESOURCE_GROUP }}')" >> $GITHUB_ENV
           echo "Using environment: $ENVIRONMENT"
           echo "Using subscription: $SUBSCRIPTION_ID"
 
@@ -53,7 +53,7 @@ jobs:
       - name: Import Existing Resource
         run: |
           cd environments/${{ env.ENVIRONMENT }}
-          terraform import azurerm_resource_group.rg "/subscriptions/${{ env.SUBSCRIPTION_ID }}/resourceGroups/${{ env.RESOURCE_GROUP }} " || echo "Resource already imported"
+          terraform import azurerm_resource_group.rg "/subscriptions/${{ env.SUBSCRIPTION_ID }}/resourceGroups/${{ env.AZURE_RESOURCE_GROUP }} " || echo "Resource already imported"
 
 
       - name: Plan Terraform
