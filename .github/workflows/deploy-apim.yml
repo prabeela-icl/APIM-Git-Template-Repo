@@ -26,6 +26,11 @@ jobs:
           echo "Using environment: $ENVIRONMENT"
           echo "Using subscription: $SUBSCRIPTION_ID"
 
+      - name: Debug Variables
+        run: |
+          echo "ENVIRONMENT: $ENVIRONMENT"
+          echo "SUBSCRIPTION_ID: $SUBSCRIPTION_ID"
+
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v2
         with:
@@ -47,13 +52,13 @@ jobs:
       - name: Plan Terraform
         run: |
           cd environments/${{ env.ENVIRONMENT }}
-          terraform plan -out=tfplan -var="subscription_id=${{ secrets.SUBSCRIPTION_ID }}" -var="environment=${{ env.ENVIRONMENT }}"
+          terraform plan -out=tfplan -var="subscription_id=${{  env.SUBSCRIPTION_ID }}" -var="environment=${{ env.ENVIRONMENT }}"
           
 
       - name: Apply Terraform (Manual Approval Required)
         run: |
           cd environments/${{ env.ENVIRONMENT }}
-          terraform apply -auto-approve -var="subscription_id=${{ secrets.SUBSCRIPTION_ID }}" -var="environment=${{ env.ENVIRONMENT }}"
+          terraform apply -auto-approve -var="subscription_id=${{  env.SUBSCRIPTION_ID }}" -var="environment=${{ env.ENVIRONMENT }}"
 
       - name: Deploy API to APIM
         run: |
