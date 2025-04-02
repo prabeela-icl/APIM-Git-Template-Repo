@@ -56,3 +56,4 @@ jobs:
           az apim api import --resource-group my-rg             --service-name my-apim             --path sample-api             --specification-url $(cat apis/api1/definitions/openapi.yaml)
 
 
+
