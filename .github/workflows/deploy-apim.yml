@@ -43,12 +43,13 @@ jobs:
       - name: Plan Terraform
         run: |
           cd environments/$ENVIRONMENT
-          terraform plan -out=tfplan
+          terraform plan -out=tfplan -var="subscription_id=${{ secrets.SUBSCRIPTION_ID }}"
+          
 
       - name: Apply Terraform (Manual Approval Required)
         run: |
           cd environments/$ENVIRONMENT
-          terraform apply -auto-approve
+          terraform apply -auto-approve -var="subscription_id=${{ secrets.SUBSCRIPTION_ID }}"
 
       - name: Deploy API to APIM
         run: |

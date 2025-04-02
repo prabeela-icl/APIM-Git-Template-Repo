@@ -9,23 +9,29 @@ terraform {
 
 provider "azurerm" {
   features {}
+
+  subscription_id = var.subscription_id
 }
 
 resource "azurerm_resource_group" "rg" {
   name     = "prabeela-sandbox"
-  location = "UK West"
+  location = var.location
 }
 
 resource "azurerm_api_management" "apim" {
-  name                = "my-public-apim"
+  name                = "apim-${var.environment}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
-  publisher_name      = "My Company"
-  publisher_email     = "admin@company.com"
-  sku_name            = "Consumption_0"
+  publisher_name      = "ICL"
+  publisher_email     = "p.sundararaj@imperial.ac.uk"
+  sku_name            = var.sku
 
   # Enable public access
   virtual_network_type = "None"
+
+    identity {
+        type = "SystemAssigned"
+    }
 }
 
 resource "azurerm_api_management_api" "sample_api" {
@@ -43,6 +49,8 @@ resource "azurerm_api_management_api" "sample_api" {
     content_value  = "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/examples/v3.0/petstore.json"
   }
 }
+
+
 
 resource "azurerm_api_management_api_policy" "public_policy" {
   api_name            = azurerm_api_management_api.sample_api.name
@@ -74,4 +82,8 @@ resource "azurerm_api_management_api_policy" "public_policy" {
     </outbound>
 </policies>
 XML
+}
+
+output "apim_url" {
+  value = azurerm_api_management.apim.gateway_url
 }
