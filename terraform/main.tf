@@ -12,8 +12,8 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "rg" {
-  name     = "my-apim-rg"
-  location = "East US"
+  name     = "prabeela-sandbox"
+  location = "UK West"
 }
 
 resource "azurerm_api_management" "apim" {
