@@ -24,3 +24,4 @@ variable "AZURE_RESOURCE_GROUP" {
   description = "Azure Resource Group Name"
   type        = string
 }
+
