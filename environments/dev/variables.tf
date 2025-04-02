@@ -19,3 +19,8 @@ variable "subscription_id" {
   description = "Azure Subscription ID"
   type        = string
 }
+
+variable "AZURE_RESOURCE_GROUP" {
+  description = "Azure Resource Group Name"
+  type        = string
+}
