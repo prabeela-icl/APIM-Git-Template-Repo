@@ -22,7 +22,7 @@ jobs:
       - name: Set Environment Variables
         run: |
           echo "ENVIRONMENT=${{ github.event.inputs.environment || 'dev' }}" >> $GITHUB_ENV
-          echo "SUBSCRIPTION_ID=$(echo '${{ secrets.AZURE_CREDENTIALS }}' | jq -r .subscriptionId)" >> $GITHUB_ENV
+          echo "SUBSCRIPTION_ID=$(echo '${{ secrets.AZURE_SUBSCRIPTION_ID }}' | jq -r .subscriptionId)" >> $GITHUB_ENV
           echo "Using environment: $ENVIRONMENT"
           echo "Using subscription: $SUBSCRIPTION_ID"
 
@@ -41,19 +41,19 @@ jobs:
 
       - name: Initialize Terraform
         run: |
-          cd environments/$ENVIRONMENT
+          cd environments/${{ env.ENVIRONMENT }}
           terraform init
 
       - name: Plan Terraform
         run: |
-          cd environments/$ENVIRONMENT
-          terraform plan -out=tfplan -var="subscription_id=${{ secrets.SUBSCRIPTION_ID }}"
+          cd environments/${{ env.ENVIRONMENT }}
+          terraform plan -out=tfplan -var="subscription_id=${{ secrets.SUBSCRIPTION_ID }}" -var="environment=${{ env.ENVIRONMENT }}"
           
 
       - name: Apply Terraform (Manual Approval Required)
         run: |
-          cd environments/$ENVIRONMENT
-          terraform apply -auto-approve -var="subscription_id=${{ secrets.SUBSCRIPTION_ID }}"
+          cd environments/${{ env.ENVIRONMENT }}
+          terraform apply -auto-approve -var="subscription_id=${{ secrets.SUBSCRIPTION_ID }}" -var="environment=${{ env.ENVIRONMENT }}"
 
       - name: Deploy API to APIM
         run: |
