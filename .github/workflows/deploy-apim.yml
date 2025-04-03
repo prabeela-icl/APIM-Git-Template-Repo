@@ -27,6 +27,7 @@ jobs:
           echo "Using environment: $ENVIRONMENT"
           echo "Using subscription: $SUBSCRIPTION_ID"
           echo "Using resourceGroup: $AZURE_RESOURCE_GROUP"
+          echo "AZURE_RESOURCE_GROUP gitops: ${{ secrets.AZURE_RESOURCE_GROUP }}"
 
       - name: Debug Variables
         run: |
