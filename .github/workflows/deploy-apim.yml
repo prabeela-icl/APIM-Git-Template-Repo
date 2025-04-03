@@ -59,8 +59,8 @@ jobs:
           cd environments/${{ env.ENVIRONMENT }}
           RESOURCE_GROUP="${{ secrets.AZURE_RESOURCE_GROUP }}"
           SUBSCRIPTION_ID="${{ secrets.AZURE_SUBSCRIPTION_ID }}"
-          terraform import azurerm_resource_group.rg "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP" -var="azurerm_resource_group=${{ env.AZURE_RESOURCE_GROUP }}" || echo "✅ Resource already imported"
-          terraform import azurerm_api_management.apim "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP/providers/Microsoft.ApiManagement/service/apim-${{ env.ENVIRONMENT }}"  -var="azurerm_resource_group=${{ env.AZURE_RESOURCE_GROUP }}"|| echo "✅ APIM already imported"
+          terraform import -var="azurerm_resource_group=${{ env.AZURE_RESOURCE_GROUP }}" azurerm_resource_group.rg "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP"  || echo "✅ Resource already imported"
+          terraform import -var="azurerm_resource_group=${{ env.AZURE_RESOURCE_GROUP }}" azurerm_api_management.apim "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP/providers/Microsoft.ApiManagement/service/apim-${{ env.ENVIRONMENT }}"|| echo "✅ APIM already imported"
 
       - name: Plan Terraform
         run: |
