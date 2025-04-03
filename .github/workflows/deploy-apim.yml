@@ -69,8 +69,8 @@ jobs:
             exit 1
           fi
 
-          terraform import  -var="environment=${{ env.ENVIRONMENT }} " -var="subscription_id=${{ env.SUBSCRIPTION_ID }} " -var="azurerm_resource_group=${{ env.AZURE_RESOURCE_GROUP }}" azurerm_resource_group.rg "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP"  || echo "✅ Resource already imported"
-          terraform import  -var="environment=${{ env.ENVIRONMENT }} " -var="subscription_id=${{ env.SUBSCRIPTION_ID }} " -var="azurerm_resource_group=${{ env.AZURE_RESOURCE_GROUP }}" azurerm_api_management.apim "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP/providers/Microsoft.ApiManagement/service/apim-${{ env.ENVIRONMENT }}"|| echo "✅ APIM already imported"
+          terraform import -var="environment=${{ env.ENVIRONMENT }} " -var="subscription_id=${{ env.SUBSCRIPTION_ID }} " -var="azurerm_resource_group=${{ env.AZURE_RESOURCE_GROUP }}" azurerm_resource_group.rg "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP"  || echo "✅ Resource already imported"
+          terraform import -var="environment=${{ env.ENVIRONMENT }} " -var="subscription_id=${{ env.SUBSCRIPTION_ID }} " -var="azurerm_resource_group=${{ env.AZURE_RESOURCE_GROUP }}" azurerm_api_management.apim "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP/providers/Microsoft.ApiManagement/service/apim-${{ env.ENVIRONMENT }}"|| echo "✅ APIM already imported"
 
       - name: Plan Terraform
         run: |
