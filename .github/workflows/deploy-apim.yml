@@ -56,7 +56,6 @@ jobs:
       
       - name: Import Existing Resource
         run: |
-          cd environments/${{ env.ENVIRONMENT }}
           RESOURCE_GROUP="${{ secrets.AZURE_RESOURCE_GROUP }}"
           SUBSCRIPTION_ID="${{ secrets.AZURE_SUBSCRIPTION_ID }}"
           terraform import azurerm_resource_group.rg "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP" || echo "Resource already imported"
