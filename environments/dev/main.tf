@@ -14,7 +14,7 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "rg" {
-  name     = "prabeela-sandbox"
+  name     = var.azurerm_resource_group
   location = var.location
 }
 

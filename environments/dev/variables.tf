@@ -20,7 +20,7 @@ variable "subscription_id" {
   type        = string
 }
 
-variable "AZURE_RESOURCE_GROUP" {
+variable "azurerm_resource_group" {
   description = "Azure Resource Group Name"
   type        = string
 }
