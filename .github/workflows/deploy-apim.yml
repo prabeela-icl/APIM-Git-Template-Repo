@@ -23,7 +23,7 @@ jobs:
         run: |
           echo "ENVIRONMENT=${{ github.event.inputs.environment || 'dev' }}" >> $GITHUB_ENV
           echo "SUBSCRIPTION_ID=$(echo '${{ secrets.AZURE_SUBSCRIPTION_ID }}')" >> $GITHUB_ENV
-          echo "AZURE_RESOURCE_GROUP =$(echo '${{ secrets.AZURE_RESOURCE_GROUP }}')" >> $GITHUB_ENV
+          echo "AZURE_RESOURCE_GROUP=$(echo '${{ secrets.AZURE_RESOURCE_GROUP }}')" >> $GITHUB_ENV
           echo "Using environment: $ENVIRONMENT"
           echo "Using subscription: $SUBSCRIPTION_ID"
           echo "Using resourceGroup: $AZURE_RESOURCE_GROUP"
