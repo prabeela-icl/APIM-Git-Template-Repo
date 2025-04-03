@@ -49,6 +49,10 @@ jobs:
         run: |
           az login --service-principal             -u ${{ secrets.AZURE_CLIENT_ID }}             -p ${{ secrets.AZURE_CLIENT_SECRET }}             --tenant ${{ secrets.AZURE_TENANT_ID }}
 
+      - name: Set Azure Subscription
+        run: |
+          az account set --subscription "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
+
       - name: Initialize Terraform
         run: |
           cd environments/${{ env.ENVIRONMENT }}
